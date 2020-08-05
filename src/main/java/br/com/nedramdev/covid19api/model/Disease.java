@@ -27,6 +27,9 @@ public class Disease {
         this.name = name;
     }
 
+    public Disease() {
+    }
+
     public Long getId() {
         return id;
     }

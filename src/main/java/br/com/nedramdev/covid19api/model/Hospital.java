@@ -3,11 +3,9 @@ package br.com.nedramdev.covid19api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.print.Doc;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Hospital {
@@ -18,14 +16,18 @@ public class Hospital {
     private Long id;
     @NotBlank(message = "Name is mandatory")
     private String name;
-    @OneToMany(mappedBy = "hospital")
-    private List<Address> address;
+    @OneToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
     @OneToMany(mappedBy = "hospital")
     @JsonIgnore
     private List<Hospitalization> hospitalizations;
     @OneToMany(mappedBy = "hospital")
     @JsonIgnore
     private List<Doctor> doctors;
+
+    public Hospital() {
+    }
 
     public Hospital(Long id, String name) {
         this.id = id;
@@ -48,11 +50,11 @@ public class Hospital {
         this.name = name;
     }
 
-    public List<Address> getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(List<Address> address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 

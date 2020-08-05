@@ -15,16 +15,17 @@ public class Address {
     private String neighborhood;
     private String complement;
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="patient_id")
+    @OneToOne(mappedBy = "address")
     private Patient patient;
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "hospital_id")
+    @OneToOne(mappedBy = "address")
     private Hospital hospital;
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
+
+    public Address() {
+    }
 
     public Address(Long id, String street, Integer number, String neighborhood, String complement) {
         this.id = id;

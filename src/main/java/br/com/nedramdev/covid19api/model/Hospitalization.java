@@ -27,6 +27,18 @@ public class Hospitalization {
     @JsonIgnore
     private Set<Diagnostic> diagnostics;
 
+    public Hospitalization(Long id, LocalDate entranceDate, LocalDate exitDate, String state, Patient patient, Hospital hospital) {
+        this.id = id;
+        this.entranceDate = entranceDate;
+        this.exitDate = exitDate;
+        this.state = state;
+        this.patient = patient;
+        this.hospital = hospital;
+    }
+
+    public Hospitalization() {
+    }
+
     public Long getId() {
         return id;
     }

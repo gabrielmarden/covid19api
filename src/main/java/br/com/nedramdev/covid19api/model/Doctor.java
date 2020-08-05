@@ -22,6 +22,9 @@ public class Doctor {
         this.speciality = speciality;
     }
 
+    public Doctor() {
+    }
+
     public Long getCrm() {
         return crm;
     }

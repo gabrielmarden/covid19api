@@ -21,6 +21,9 @@ public class Exam {
         this.description = description;
     }
 
+    public Exam() {
+    }
+
     public Long getId() {
         return id;
     }

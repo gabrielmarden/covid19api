@@ -53,9 +53,9 @@ public class PatientControllerTest {
 
     @Test
     public void shouldResponseStatus200OKWhenPatientExists() throws Exception{
-        Patient patient = new Patient(200021311L,"marden","masculino", LocalDate.now());
+        Patient patient = new Patient("020021311","marden","masculino", LocalDate.now());
 
-        BDDMockito.when(service.findById(200021311L)).thenReturn(patient);
+        BDDMockito.when(service.findById("020021311")).thenReturn(patient);
 
         MvcResult result = mvc.perform(get("/patient/{id}",200021311L))
                         .andExpect(status().isOk())
@@ -70,7 +70,7 @@ public class PatientControllerTest {
     @Test
     public void shouldResponseStatus404NotFoundWhenPatientDoesNotExist() throws Exception{
 
-        BDDMockito.when(service.findById(1L)).thenThrow(new ResourceNotFoundException("Patient with id 1 not found"));
+        BDDMockito.when(service.findById("1")).thenThrow(new ResourceNotFoundException("Patient with id 1 not found"));
 
         MvcResult result = mvc.perform(get("/patient/1"))
                 .andExpect(status().isNotFound())
@@ -82,7 +82,7 @@ public class PatientControllerTest {
 
     @Test
     public void shouldReturnStatus201CreatedWhenSavePatient() throws Exception{
-        Patient patient = new Patient(200312345L,"marden","masculino",LocalDate.now());
+        Patient patient = new Patient("200312345","marden","masculino",LocalDate.now());
 
         BDDMockito.when(service.save(any(Patient.class))).thenReturn(patient);
 

@@ -14,7 +14,7 @@ public class PatientService {
     @Autowired
     private PatientRepository repository;
 
-    public Patient findById(Long id){
+    public Patient findById(String id){
         return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Patient with id "+id+" not found"));
     }
 

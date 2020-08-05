@@ -22,7 +22,7 @@ public class PatientController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getPatientById(@PathVariable("id") Long id){
+    public ResponseEntity<?> getPatientById(@PathVariable("id") String id){
         Patient patient = patientService.findById(id);
         return ResponseEntity.ok().body(patient);
     }

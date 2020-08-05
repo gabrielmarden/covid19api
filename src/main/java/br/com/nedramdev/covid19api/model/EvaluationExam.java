@@ -20,6 +20,9 @@ public class EvaluationExam {
         this.resultDate = resultDate;
     }
 
+    public EvaluationExam() {
+    }
+
     public EvaluationExamPK getId() {
         return id;
     }

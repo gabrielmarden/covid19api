@@ -20,6 +20,9 @@ public class State {
         this.uf = uf;
     }
 
+    public State() {
+    }
+
     public Long getId() {
         return id;
     }

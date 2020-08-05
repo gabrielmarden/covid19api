@@ -3,7 +3,6 @@ package br.com.nedramdev.covid19api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -11,15 +10,15 @@ import java.util.List;
 public class Patient {
 
     @Id
-    @NotNull(message = "CPF is mandatory")
-    private Long cpf;
+    private String cpf;
     private String name;
     private String sex;
     private LocalDate birthDate;
     @ElementCollection
     private List<String> phones;
-    @OneToMany(mappedBy = "patient",cascade = CascadeType.ALL)
-    private List<Address> addresses;
+    @OneToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
     @ManyToMany
     @JoinTable(name="patient_comorbidity",
             joinColumns = @JoinColumn(name="patient_id"),
@@ -30,18 +29,21 @@ public class Patient {
     @OneToMany(mappedBy = "patient")
     private List<Hospitalization> hospitalizations;
 
-    public Patient(Long cpf, String name, String sex, LocalDate birthDate) {
+    public Patient() {
+    }
+
+    public Patient(String cpf, String name, String sex, LocalDate birthDate) {
         this.cpf = cpf;
         this.name = name;
         this.sex = sex;
         this.birthDate = birthDate;
     }
 
-    public Long getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(Long cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
@@ -77,12 +79,12 @@ public class Patient {
         this.phones = phones;
     }
 
-    public List<Address> getAddresses() {
-        return addresses;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public List<Comorbidity> getComorbidities() {

@@ -14,6 +14,9 @@ public class City {
     @JoinColumn(name = "state_id")
     private State state;
 
+    public City() {
+    }
+
     public City(Long id, String name) {
         this.id = id;
         this.name = name;

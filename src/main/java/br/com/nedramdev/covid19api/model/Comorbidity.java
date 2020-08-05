@@ -12,6 +12,9 @@ public class Comorbidity {
     private Long id;
     private String name;
 
+    public Comorbidity() {
+    }
+
     public Comorbidity(Long id, String name) {
         this.id = id;
         this.name = name;
