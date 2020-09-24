@@ -24,7 +24,6 @@ public class Hospitalization {
     @OneToMany(mappedBy = "id.hospitalization",cascade = CascadeType.ALL)
     private Set<EvaluationExam> evaluationExams;
     @OneToMany(mappedBy = "id.hospitalization",cascade = CascadeType.ALL)
-    @JsonIgnore
     private Set<Diagnostic> diagnostics;
 
     public Hospitalization(Long id, LocalDate entranceDate, LocalDate exitDate, String state, Patient patient, Hospital hospital) {
@@ -88,7 +87,6 @@ public class Hospitalization {
         this.hospital = hospital;
     }
 
-    @JsonIgnore
     public Set<Diagnostic> getDiagnostics() {
         return diagnostics;
     }
