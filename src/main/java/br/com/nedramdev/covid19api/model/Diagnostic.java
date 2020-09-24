@@ -26,6 +26,13 @@ public class Diagnostic {
         this.date = date;
     }
 
+    public Diagnostic(Hospitalization hospitalization,Disease disease,String status,LocalDate date){
+        this.id = new DiagnosisPk(hospitalization,disease);
+        this.status = status;
+        this.date = date;
+    }
+
+
     public DiagnosisPk getId() {
         return id;
     }

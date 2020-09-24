@@ -17,7 +17,6 @@ public class DiagnosisPk implements Serializable {
     @JoinColumn(name = "disease_id")
     private Disease disease;
 
-
     public DiagnosisPk(Hospitalization hospitalization, Disease disease) {
         this.hospitalization = hospitalization;
         this.disease = disease;

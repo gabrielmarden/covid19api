@@ -1,5 +1,7 @@
 package br.com.nedramdev.covid19api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,8 +14,10 @@ public class Doctor {
     private String speciality;
     @ManyToOne
     @JoinColumn(name = "hospital_id")
+    @JsonIgnore
     private Hospital hospital;
     @OneToMany(mappedBy = "doctor")
+    @JsonIgnore
     private List<Diagnostic> diagnostics;
 
     public Doctor(Long crm, String name, String speciality) {
@@ -49,6 +53,7 @@ public class Doctor {
         this.speciality = speciality;
     }
 
+    @JsonIgnore
     public Hospital getHospital() {
         return hospital;
     }
@@ -57,6 +62,7 @@ public class Doctor {
         this.hospital = hospital;
     }
 
+    @JsonIgnore
     public List<Diagnostic> getDiagnosis() {
         return diagnostics;
     }

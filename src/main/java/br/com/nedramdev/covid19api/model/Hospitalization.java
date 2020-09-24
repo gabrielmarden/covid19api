@@ -16,7 +16,7 @@ public class Hospitalization {
     private LocalDate exitDate;
     private String state;
     @ManyToOne
-    @JoinColumn(name = "pacient_id")
+    @JoinColumn(name = "patient_id")
     private Patient patient;
     @ManyToOne
     @JoinColumn(name = "hospital_id")
