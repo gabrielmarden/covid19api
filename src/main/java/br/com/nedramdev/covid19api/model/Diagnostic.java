@@ -16,7 +16,6 @@ public class Diagnostic {
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
-
     public Diagnostic() {
     }
 

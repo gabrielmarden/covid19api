@@ -3,7 +3,6 @@ package br.com.nedramdev.covid19api.controller;
 import br.com.nedramdev.covid19api.model.Hospitalization;
 import br.com.nedramdev.covid19api.service.HospitalizationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,7 @@ public class HospitalizationController {
         if(disease==null)
             return ResponseEntity.ok().body(service.findAll(page,size));
         else
-            return ResponseEntity.ok().body(service.findByDisease(disease,page,size));
+            return ResponseEntity.ok().body(service.findByDisease(disease.toLowerCase(),page,size));
     }
 
     @GetMapping("/{id}")

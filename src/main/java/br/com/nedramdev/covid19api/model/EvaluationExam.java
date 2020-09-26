@@ -13,6 +13,7 @@ public class EvaluationExam {
     private LocalDate collectDate;
     private LocalDate resultDate;
 
+
     public EvaluationExam(EvaluationExamPK id, String result, LocalDate collectDate, LocalDate resultDate) {
         this.id = id;
         this.result = result;

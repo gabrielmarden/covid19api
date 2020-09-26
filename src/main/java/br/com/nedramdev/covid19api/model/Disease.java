@@ -3,7 +3,6 @@ package br.com.nedramdev.covid19api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,9 +14,6 @@ public class Disease {
     private String name;
     @ElementCollection
     private Set<String> symptons;
-    @OneToMany
-    @JoinColumn(name = "exam_id")
-    private List<Exam> exams;
     @OneToMany
     @JsonIgnore
     private Set<Diagnostic> diagnostics;
@@ -54,13 +50,6 @@ public class Disease {
         this.symptons = symptons;
     }
 
-    public List<Exam> getExams() {
-        return exams;
-    }
-
-    public void setExams(List<Exam> exams) {
-        this.exams = exams;
-    }
 
     public Set<Diagnostic> getDiagnostics() {
         return diagnostics;

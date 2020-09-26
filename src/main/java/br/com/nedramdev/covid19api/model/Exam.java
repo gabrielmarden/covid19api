@@ -11,7 +11,7 @@ public class Exam {
     private String name;
     private String type;
     private String description;
-    @OneToMany
+    @OneToMany(mappedBy = "id.exam",cascade = CascadeType.ALL)
     private Set<EvaluationExam> evaluationExams;
 
     public Exam(Long id, String name, String type, String description) {
