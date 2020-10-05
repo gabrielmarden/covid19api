@@ -25,7 +25,6 @@ public class Patient {
             inverseJoinColumns = @JoinColumn(name="comorbidity_id")
     )
     private List<Comorbidity> comorbidities;
-    @JsonIgnore
     @OneToMany(mappedBy = "patient")
     private List<Hospitalization> hospitalizations;
 

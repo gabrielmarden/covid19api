@@ -69,7 +69,6 @@ public class Hospitalization {
     public void setState(String state) {
         this.state = state;
     }
-
     @JsonIgnore
     public Patient getPatient() {
         return patient;

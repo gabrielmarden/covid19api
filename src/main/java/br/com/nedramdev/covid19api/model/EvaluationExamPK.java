@@ -1,5 +1,7 @@
 package br.com.nedramdev.covid19api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -11,6 +13,7 @@ public class EvaluationExamPK implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "hospitalization_id")
+
     private Hospitalization hospitalization;
 
     @ManyToOne
@@ -26,6 +29,16 @@ public class EvaluationExamPK implements Serializable {
 
     public void setExam(Exam exam) {
         this.exam = exam;
+    }
+
+    @JsonIgnore
+    public Hospitalization getHospitalization() {
+        return hospitalization;
+    }
+
+    @JsonIgnore
+    public Exam getExam() {
+        return exam;
     }
 
     @Override

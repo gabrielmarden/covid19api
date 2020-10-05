@@ -36,4 +36,9 @@ public class HospitalizationService {
         Pageable paging = PageRequest.of(page,size);
         return repository.findByDisease(diseaseName,paging);
     }
+
+    public Page<Hospitalization> findByPatient(String id, Integer page, Integer size){
+        Pageable paging = PageRequest.of(page,size);
+        return repository.findByPatientCpf(id,paging);
+    }
 }

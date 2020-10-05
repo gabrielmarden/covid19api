@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("hospitalization")
+@RequestMapping("/hospitalization")
 public class HospitalizationController {
 
     @Autowired
@@ -20,6 +20,8 @@ public class HospitalizationController {
     public ResponseEntity<?> getAllHospitalization(@RequestParam(required = false) String disease,
                                                    @RequestParam(defaultValue = "0") Integer page,
                                                    @RequestParam(defaultValue = "10") Integer size){
+        System.out.println("No fuck no!");
+
         if(disease==null)
             return ResponseEntity.ok().body(service.findAll(page,size));
         else
@@ -34,6 +36,11 @@ public class HospitalizationController {
     @PostMapping
     public ResponseEntity saveHospitalization(@RequestBody @Valid Hospitalization hospitalization){
         return ResponseEntity.status(HttpStatus.CREATED).body(hospitalization);
+    }
+
+    public ResponseEntity<?> getAllHospitalizationByPatientId(String id,Integer page, Integer size){
+        System.out.println("Yeah! I´m in.");
+        return ResponseEntity.ok().body(service.findByPatient(id,page,size));
     }
 
 

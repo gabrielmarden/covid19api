@@ -18,4 +18,9 @@ public interface HospitalizationRepository extends JpaRepository<Hospitalization
             "where s.name like concat('%',:diseaseName,'%') ")
     Page<Hospitalization> findByDisease(@Param("diseaseName") String diseaseName, Pageable pageable);
 
+    @Query(value = "select i from Hospitalization i "+
+                    "join i.patient p "+
+                    "where p.cpf = :id")
+    Page<Hospitalization> findByPatientCpf(@Param("id") String id, Pageable pageable);
+
 }
