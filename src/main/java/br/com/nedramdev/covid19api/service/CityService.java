@@ -14,7 +14,7 @@ public class CityService {
     @Autowired
     private CityRepository repository;
 
-    public City findCityById(Long id){
+    public City findById(Long id){
         return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("City with id "+id+"not found!"));
     }
 
@@ -22,8 +22,6 @@ public class CityService {
         return repository.findAll();
     }
 
-    public City save(City city){
-        return repository.save(city);
-    }
+    public List<City> findByState(Long id){return repository.findByStateId(id);}
 
 }

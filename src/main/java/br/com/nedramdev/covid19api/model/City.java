@@ -1,5 +1,6 @@
 package br.com.nedramdev.covid19api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ public class City {
     private String name;
     @ManyToOne
     @JoinColumn(name = "state_id")
+    @JsonIgnore
     private State state;
 
 }

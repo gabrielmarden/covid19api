@@ -22,7 +22,5 @@ public class StateService {
         return repository.findAll();
     }
 
-    public State save(State state){
-        return repository.save(state);
-    }
+
 }
