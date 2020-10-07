@@ -1,6 +1,10 @@
 package br.com.nedramdev.covid19api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
@@ -9,49 +13,19 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
 public class EvaluationExamPK implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "hospitalization_id")
-
+    @JsonIgnore
     private Hospitalization hospitalization;
 
     @ManyToOne
     @JoinColumn(name = "exam_id")
     private Exam exam;
 
-    public EvaluationExamPK() {
-    }
-
-    public void setHospitalization(Hospitalization hospitalization) {
-        this.hospitalization = hospitalization;
-    }
-
-    public void setExam(Exam exam) {
-        this.exam = exam;
-    }
-
-    @JsonIgnore
-    public Hospitalization getHospitalization() {
-        return hospitalization;
-    }
-
-    @JsonIgnore
-    public Exam getExam() {
-        return exam;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        EvaluationExamPK that = (EvaluationExamPK) o;
-        return Objects.equals(hospitalization, that.hospitalization) &&
-                Objects.equals(exam, that.exam);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(hospitalization, exam);
-    }
 }

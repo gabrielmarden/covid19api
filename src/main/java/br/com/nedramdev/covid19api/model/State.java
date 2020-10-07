@@ -1,49 +1,25 @@
 package br.com.nedramdev.covid19api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class State {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String uf;
-
     @OneToMany(mappedBy = "state",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<City> cities;
 
-    public State(Long id, String name, String uf) {
-        this.id = id;
-        this.name = name;
-        this.uf = uf;
-    }
-
-    public State() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUf() {
-        return uf;
-    }
-
-    public void setUf(String uf) {
-        this.uf = uf;
-    }
 }

@@ -1,9 +1,17 @@
 package br.com.nedramdev.covid19api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Exam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,6 +20,7 @@ public class Exam {
     private String type;
     private String description;
     @OneToMany(mappedBy = "id.exam",cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<EvaluationExam> evaluationExams;
 
     public Exam(Long id, String name, String type, String description) {
@@ -21,46 +30,4 @@ public class Exam {
         this.description = description;
     }
 
-    public Exam() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Set<EvaluationExam> getEvaluationExams() {
-        return evaluationExams;
-    }
-
-    public void setEvaluationExams(Set<EvaluationExam> evaluationExams) {
-        this.evaluationExams = evaluationExams;
-    }
 }

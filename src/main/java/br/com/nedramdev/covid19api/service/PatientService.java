@@ -5,6 +5,7 @@ import br.com.nedramdev.covid19api.model.Patient;
 import br.com.nedramdev.covid19api.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class PatientService {
         return repository.findAll();
     }
 
+    @Transactional
     public Patient save(Patient patient){
         return repository.save(patient);
     }

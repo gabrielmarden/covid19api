@@ -1,22 +1,34 @@
 package br.com.nedramdev.covid19api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Patient {
 
     @Id
+    @NotNull
     private String cpf;
+    @NotBlank
     private String name;
+    @NotBlank
     private String sex;
     private LocalDate birthDate;
     @ElementCollection
-    private List<String> phones;
-    @OneToOne
+    private List<String> phones = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
     @ManyToMany
@@ -24,12 +36,10 @@ public class Patient {
             joinColumns = @JoinColumn(name="patient_id"),
             inverseJoinColumns = @JoinColumn(name="comorbidity_id")
     )
-    private List<Comorbidity> comorbidities;
-    @OneToMany(mappedBy = "patient")
-    private List<Hospitalization> hospitalizations;
-
-    public Patient() {
-    }
+    private List<Comorbidity> comorbidities = new ArrayList<>();
+    @OneToMany(mappedBy = "patient",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Hospitalization> hospitalizations = new ArrayList<>();
 
     public Patient(String cpf, String name, String sex, LocalDate birthDate) {
         this.cpf = cpf;
@@ -38,68 +48,4 @@ public class Patient {
         this.birthDate = birthDate;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public List<String> getPhones() {
-        return phones;
-    }
-
-    public void setPhones(List<String> phones) {
-        this.phones = phones;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public List<Comorbidity> getComorbidities() {
-        return comorbidities;
-    }
-
-    public void setComorbidities(List<Comorbidity> comorbidities) {
-        this.comorbidities = comorbidities;
-    }
-
-    @JsonIgnore
-    public List<Hospitalization> getHospitalizations() {
-        return hospitalizations;
-    }
-
-    public void setHospitalizations(List<Hospitalization> hospitalizations) {
-        this.hospitalizations = hospitalizations;
-    }
 }
