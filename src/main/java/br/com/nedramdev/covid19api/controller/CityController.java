@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/util/city")
+@RequestMapping("/api/util/city")
 @AllArgsConstructor
 public class CityController {
 

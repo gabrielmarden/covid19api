@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("hospital")
+@RequestMapping("/api/hospital")
 public class HospitalController {
 
     @Autowired

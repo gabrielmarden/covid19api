@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/util/state")
+@RequestMapping("/api/util/state")
 @AllArgsConstructor
 public class StateController {
 

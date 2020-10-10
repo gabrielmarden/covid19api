@@ -1,5 +1,7 @@
 package br.com.nedramdev.covid19api.controller;
 
+import br.com.nedramdev.covid19api.dto.PatientData;
+import br.com.nedramdev.covid19api.mapper.PatientMapper;
 import br.com.nedramdev.covid19api.model.Hospitalization;
 import br.com.nedramdev.covid19api.model.Patient;
 import br.com.nedramdev.covid19api.service.PatientService;
@@ -13,7 +15,7 @@ import javax.validation.Valid;
 import javax.xml.ws.Response;
 
 @RestController
-@RequestMapping("/patient")
+@RequestMapping("/api/patient")
 public class PatientController {
 
     @Autowired
@@ -34,9 +36,9 @@ public class PatientController {
     }
 
     @PostMapping
-    public ResponseEntity<?> savePatient(@Valid @RequestBody Patient patient){
-        Patient patientSaved = patientService.save(patient);
-        return new ResponseEntity<>(patientSaved,HttpStatus.CREATED);
+    public ResponseEntity<?> savePatient(@Valid @RequestBody PatientData patient){
+        patientService.save(PatientMapper.dtoToPatient(patient));
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/{id}/hospitalization")

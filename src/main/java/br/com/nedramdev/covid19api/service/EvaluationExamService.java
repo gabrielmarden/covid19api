@@ -21,8 +21,8 @@ public class EvaluationExamService {
         return repository.findAll();
     }
 
-    public EvaluationExam save(EvaluationExam evaluationExam){
-        return repository.save(evaluationExam);
+    public void save(EvaluationExam evaluationExam){
+        repository.save(evaluationExam);
     }
 
 }
