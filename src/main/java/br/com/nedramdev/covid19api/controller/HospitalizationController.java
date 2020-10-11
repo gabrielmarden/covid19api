@@ -2,19 +2,25 @@ package br.com.nedramdev.covid19api.controller;
 
 import br.com.nedramdev.covid19api.dto.DiagnosticRequest;
 import br.com.nedramdev.covid19api.dto.ExamRequest;
+import br.com.nedramdev.covid19api.dto.HospitalizationRequest;
 import br.com.nedramdev.covid19api.mapper.DiagnosticMapper;
 import br.com.nedramdev.covid19api.mapper.EvaluationExamMapper;
+import br.com.nedramdev.covid19api.mapper.HospitalizationMapper;
 import br.com.nedramdev.covid19api.model.Hospitalization;
 import br.com.nedramdev.covid19api.service.DiagnosticService;
 import br.com.nedramdev.covid19api.service.EvaluationExamService;
 import br.com.nedramdev.covid19api.service.HospitalizationService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/hospitalization")
@@ -34,12 +40,20 @@ public class HospitalizationController {
     public ResponseEntity<?> getAllHospitalization(@RequestParam(required = false) String disease,
                                                    @RequestParam(defaultValue = "0") Integer page,
                                                    @RequestParam(defaultValue = "10") Integer size){
-        System.out.println("No fuck no!");
-
-        if(disease==null)
-            return ResponseEntity.ok().body(hospitalizationService.findAll(page,size));
-        else
-            return ResponseEntity.ok().body(hospitalizationService.findByDisease(disease.toLowerCase(),page,size));
+        Page<Hospitalization> data;
+        if(disease==null) {
+            data = hospitalizationService.findAll(page, size);
+        }else {
+            data = hospitalizationService.findByDisease(disease.toLowerCase(), page, size);
+        }
+        return ResponseEntity.ok()
+                .body(new PageImpl<HospitalizationRequest>(
+                        data.getContent()
+                        .stream()
+                        .map(HospitalizationMapper::hospitalizationToDTO)
+                                .collect(Collectors.toList()),
+                        data.getPageable(),
+                        data.getTotalElements()));
     }
 
     @GetMapping("/{id}")
@@ -48,12 +62,21 @@ public class HospitalizationController {
     }
 
     @PostMapping
-    public ResponseEntity saveHospitalization(@RequestBody @Valid Hospitalization hospitalization){
-        return ResponseEntity.status(HttpStatus.CREATED).body(hospitalization);
+    public ResponseEntity saveHospitalization(@RequestBody HospitalizationRequest hospitalization){
+        hospitalizationService.save(HospitalizationMapper.dtoToHospitalization(hospitalization));
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     public ResponseEntity<?> getAllHospitalizationByPatientId(String id,Integer page, Integer size){
-        return ResponseEntity.ok().body(hospitalizationService.findByPatient(id,page,size));
+        Page<Hospitalization> data = hospitalizationService.findByPatient(id,page,size);
+        Page<HospitalizationRequest> response = new PageImpl<>(data
+                .getContent()
+                .stream()
+                .map(HospitalizationMapper::hospitalizationToDTO)
+                    .collect(Collectors.toList()),
+                data.getPageable(),
+                data.getTotalElements());
+        return ResponseEntity.ok().body(response);
     }
 
     @PostMapping("/exam-request")
