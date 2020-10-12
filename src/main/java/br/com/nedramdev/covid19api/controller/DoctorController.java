@@ -2,9 +2,11 @@ package br.com.nedramdev.covid19api.controller;
 
 import br.com.nedramdev.covid19api.model.Doctor;
 import br.com.nedramdev.covid19api.service.DoctorService;
+import br.com.nedramdev.covid19api.util.Const;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,6 +29,7 @@ public class DoctorController {
         return ResponseEntity.ok().body(service.findById(id));
     }
 
+    @Secured(Const.ROLE_ADMIN)
     @PostMapping
     public ResponseEntity<?> save(@Valid @RequestBody Doctor doctor){
         return ResponseEntity.ok().body(service.save(doctor));

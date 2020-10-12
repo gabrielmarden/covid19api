@@ -10,16 +10,16 @@ import br.com.nedramdev.covid19api.model.Hospitalization;
 import br.com.nedramdev.covid19api.service.DiagnosticService;
 import br.com.nedramdev.covid19api.service.EvaluationExamService;
 import br.com.nedramdev.covid19api.service.HospitalizationService;
+import br.com.nedramdev.covid19api.util.Const;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -36,6 +36,7 @@ public class HospitalizationController {
     @Autowired
     private final DiagnosticService diagnosticService;
 
+    @Secured({Const.ROLE_ADMIN,Const.ROLE_DOCTOR})
     @GetMapping
     public ResponseEntity<?> getAllHospitalization(@RequestParam(required = false) String disease,
                                                    @RequestParam(defaultValue = "0") Integer page,
@@ -56,16 +57,19 @@ public class HospitalizationController {
                         data.getTotalElements()));
     }
 
+    @Secured({Const.ROLE_DOCTOR})
     @GetMapping("/{id}")
     public ResponseEntity<?> getHospitalizationById(@PathVariable Long id){
         return ResponseEntity.ok().body(hospitalizationService.findById(id));
     }
+
 
     @PostMapping
     public ResponseEntity saveHospitalization(@RequestBody HospitalizationRequest hospitalization){
         hospitalizationService.save(HospitalizationMapper.dtoToHospitalization(hospitalization));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
 
     public ResponseEntity<?> getAllHospitalizationByPatientId(String id,Integer page, Integer size){
         Page<Hospitalization> data = hospitalizationService.findByPatient(id,page,size);
@@ -79,12 +83,14 @@ public class HospitalizationController {
         return ResponseEntity.ok().body(response);
     }
 
+    @Secured(Const.ROLE_DOCTOR)
     @PostMapping("/exam-request")
     public ResponseEntity<?> requestExam(@RequestBody ExamRequest examRequest){
         examService.save(EvaluationExamMapper.dtoToEvaluationExam(examRequest));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @Secured(Const.ROLE_DOCTOR)
     @PostMapping("/diagnostic-request")
     public ResponseEntity<?> requestDiagnostic(@RequestBody DiagnosticRequest diagnosticRequest){
         diagnosticService.save(DiagnosticMapper.dtoToDiagnostic(diagnosticRequest));
