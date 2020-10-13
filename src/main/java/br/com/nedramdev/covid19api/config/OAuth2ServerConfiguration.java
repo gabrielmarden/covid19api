@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -40,9 +41,12 @@ public class OAuth2ServerConfiguration {
                     .logout()
                     .invalidateHttpSession(true)
                     .clearAuthentication(true)
-                    .and().authorizeRequests()
-                    .anyRequest().fullyAuthenticated();
+                    .and()
+                    .authorizeRequests()
+                        .anyRequest().fullyAuthenticated();
         }
+
+
     }
     @Configuration
     @EnableAuthorizationServer

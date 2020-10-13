@@ -3,6 +3,7 @@ package br.com.nedramdev.covid19api.controller;
 import br.com.nedramdev.covid19api.model.Users;
 import br.com.nedramdev.covid19api.repository.UserRepository;
 import br.com.nedramdev.covid19api.util.Const;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,13 +27,14 @@ public class UserController {
     @Autowired
     private PasswordEncoder encoder;
 
+    @ApiOperation(value = "save user")
     @Secured(Const.ROLE_ADMIN)
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody Users user){
+    public ResponseEntity<Void> save(@RequestBody Users user){
         userRepo.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-
+    @ApiOperation(value = "find all users")
     @Secured({Const.ROLE_USER, Const.ROLE_ADMIN})
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<Page<Users>> list(
