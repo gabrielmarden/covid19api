@@ -43,7 +43,7 @@ public class OAuth2ServerConfiguration {
                     .clearAuthentication(true)
                     .and()
                     .authorizeRequests()
-                        .anyRequest().fullyAuthenticated();
+                        .anyRequest().authenticated();
         }
 
 
