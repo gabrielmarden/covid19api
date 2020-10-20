@@ -18,8 +18,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.stream.Collectors;
 
 @RestController
@@ -36,7 +38,7 @@ public class HospitalizationController {
     @Autowired
     private final DiagnosticService diagnosticService;
 
-    @Secured({Const.ROLE_ADMIN,Const.ROLE_DOCTOR})
+    @RolesAllowed({Const.ROLE_ADMIN,Const.ROLE_DOCTOR})
     @GetMapping
     public ResponseEntity<Page<HospitalizationRequest>> getAllHospitalization(@RequestParam(required = false) String disease,
                                                    @RequestParam(defaultValue = "0") Integer page,
@@ -57,7 +59,7 @@ public class HospitalizationController {
                         data.getTotalElements()));
     }
 
-    @Secured({Const.ROLE_DOCTOR})
+    @RolesAllowed(Const.ROLE_DOCTOR)
     @GetMapping("/{id}")
     public ResponseEntity<Hospitalization> getHospitalizationById(@PathVariable Long id){
         return ResponseEntity.ok().body(hospitalizationService.findById(id));
@@ -81,14 +83,14 @@ public class HospitalizationController {
         return ResponseEntity.ok().body(response);
     }
 
-    @Secured(Const.ROLE_DOCTOR)
+    @RolesAllowed(Const.ROLE_DOCTOR)
     @PostMapping("/exam-request")
     public ResponseEntity<Void> requestExam(@RequestBody ExamRequest examRequest){
         examService.save(EvaluationExamMapper.dtoToEvaluationExam(examRequest));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @Secured(Const.ROLE_DOCTOR)
+    @RolesAllowed(Const.ROLE_DOCTOR)
     @PostMapping("/diagnostic-request")
     public ResponseEntity<Void> requestDiagnostic(@RequestBody DiagnosticRequest diagnosticRequest){
         diagnosticService.save(DiagnosticMapper.dtoToDiagnostic(diagnosticRequest));
